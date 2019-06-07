@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/header/Header"
+import Pagination from "./components/Pagination/Pagination"
+import {fetchPageitems} from "./utils/fetchPageItems"
 
-function App() {
+const tags=["Top","New","Show","Ask","Job"]
+
+class App extends React.Component {
+
+  state={
+    currentPage:1,
+    currentSelectedStory:0
+  }
+
+  componentDidMount() { 
+    let page =this.props.match.url.slice(1)
+  }
+  
+  render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    <Header tags={tags} />
+    <Pagination />
+    </>
+
+  )
+  }
 }
 
 export default App;
