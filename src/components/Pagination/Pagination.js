@@ -10,15 +10,24 @@ function Pagination(props) {
       <div className={style.inner_container}>
         <div className={style.text}>
           {currentPage === 1 ? (
-            <Link
-              to="/"
+            <a
+              href="/"
               className={style.disabled}
               onClick={e => e.preventDefault()}
             >
               &lt;prev
-            </Link>
+            </a>
           ) : (
-            <Link className={style.link}>&lt;prev</Link>
+            <a
+              href="/"
+              className={style.link}
+              onClick={e => {
+                e.preventDefault();
+                props.changePage("decrement");
+              }}
+            >
+              &lt;prev
+            </a>
           )}
         </div>
         <div className={style.text}>{currentPage}</div>
@@ -26,15 +35,24 @@ function Pagination(props) {
         <div className={style.text}>{pages}</div>
         <div className={style.text}>
           {currentPage === pages ? (
-            <Link
-              to="/"
+            <a
+              href="/"
               className={style.disabled}
               onClick={e => e.preventDefault()}
             >
               next&gt;
-            </Link>
+            </a>
           ) : (
-            <Link className={style.link}>next&gt;</Link>
+            <a
+              href="/"
+              className={style.link}
+              onClick={e => {
+                e.preventDefault();
+                props.changePage("increment");
+              }}
+            >
+              next&gt;
+            </a>
           )}
         </div>
       </div>

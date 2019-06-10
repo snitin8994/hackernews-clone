@@ -12,11 +12,12 @@ function Header(props) {
             <span className={style.logo_text}>R</span>
           </div>
         </Link>
-        {props.tags.map((tag, index) => (
-          <Link to={`/${tag}`} key={index} className={style.anchor}>
+        {props.tags.map((tag, index) => {
+          const urlTag = tag[0].toLowerCase()+tag.slice(1)
+          return (<Link to={`/${urlTag}`} key={index} className={style.anchor}>
             <span className={style.tags}>{tag}</span>
-          </Link>
-        ))}
+          </Link>)
+        })}
         {/* <Link className={style.anchor}>
           <span className={style.tags}>Top</span>
         </Link>
