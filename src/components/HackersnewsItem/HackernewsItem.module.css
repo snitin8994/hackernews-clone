@@ -1,11 +1,14 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 .item {
-  font-family: "Roboto", sans-serif;
-  border-bottom: 1px solid gray;
+  font-family: 'Open Sans', sans-serif;
+  border: 2px solid #f60;
+  border-radius: 100px;
+  
   background-color: white;
   color: #34495e;
   display: flex;
   padding: 1rem;
+  margin-bottom: 1rem;
 }
 
 .link {

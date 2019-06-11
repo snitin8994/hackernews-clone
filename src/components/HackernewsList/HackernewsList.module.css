@@ -5,3 +5,10 @@
     margin: 0 auto;
 
 }
+
+.spinner_container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 20%;
+}

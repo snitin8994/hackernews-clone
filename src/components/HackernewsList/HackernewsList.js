@@ -8,7 +8,9 @@ function HackernewsList(props) {
   return (
     <div className={style.container}>
       {props.isLoading ? (
-        <Spinner name="line-scale" color="steelblue" />
+        <div className={style.spinner_container}>
+          <Spinner name="line-scale" color="steelblue" />
+        </div>
       ) : (
         props.items.map((story, index) => (
           <HackernewsItem key={index} story={story} />
