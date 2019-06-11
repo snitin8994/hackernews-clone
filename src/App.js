@@ -7,19 +7,19 @@ import { noOfPages } from "./utils/noOfPages";
 import HackernewsList from "./components/HackernewsList/HackernewsList";
 import { fetchItem } from "./utils/fetchItem";
 
-const pagetoUrlMapper= {
-  "Top":"top",
-  "Show": "show",
-  "Ask": "ask",
-  "Jobs": "job",
-  "New": "new"
-}
+const pagetoUrlMapper = {
+  Top: "top",
+  Show: "show",
+  Ask: "ask",
+  Jobs: "job",
+  New: "new"
+};
 
 const tags = ["Top", "New", "Show", "Ask", "Jobs"];
 
 class App extends React.Component {
   state = {
-    pageHeader:"Top",
+    pageHeader: "Top",
     allpageitems: [],
     currentPageItems: [],
     currentPage: 1,
@@ -51,123 +51,131 @@ class App extends React.Component {
     });
   }
 
-  changePage = type => {
-    if (type === "increment") {
-      let page = this.state.currentPage + 1;
-      this.setState(
-        prevState => ({
-          currentPage: prevState.currentPage + 1,
-          isLoading: true
-        }),
-        () => {
-          if (this.cachedPageResult[page - 1]) {
+  handlePageNextClick = () => {
+    let page = this.state.currentPage + 1;
+    this.setState(
+      prevState => ({
+        currentPage: prevState.currentPage + 1,
+        isLoading: true
+      }),
+      () => {
+        if (this.cachedPageResult[page - 1]) {
+          this.setState({
+            currentPageItems: this.cachedPageResult[page - 1],
+            isLoading: false
+          });
+
+          if (page + 1 <= this.totalPages() && !this.cachedPageResult[page + 1])
+            this.getPageItems(page + 1).then(result => {
+              this.cachedPageResult[page] = result;
+            });
+          return;
+        }
+        this.getPageItems().then(result => {
+          this.cachedPageResult[page - 1] = result;
+          if (this.state.currentPage === page) {
             this.setState({
-              currentPageItems: this.cachedPageResult[page - 1],
+              currentPageItems: result,
               isLoading: false
             });
 
-              if (page + 1 <= this.totalPages() && !this.cachedPageResult[page+1])
-                this.getPageItems(page + 1).then(result => {
-                  this.cachedPageResult[page] = result;
-                });
-            return;
-          }
-          this.getPageItems().then(result => {
-            this.cachedPageResult[page - 1] = result;
-            if (this.state.currentPage === page) {
-              this.setState({
-                currentPageItems: result,
-                isLoading: false
+            if (page + 1 <= this.totalPages())
+              this.getPageItems(page + 1).then(result => {
+                this.cachedPageResult[page] = result;
               });
-
-              if (page + 1 <= this.totalPages())
-                this.getPageItems(page + 1).then(result => {
-                  this.cachedPageResult[page] = result;
-                });
-            }
-          });
-        }
-      );
-    } else {
-      let page = this.state.currentPage - 1;
-      this.setState(
-        prevState => ({
-          currentPage: prevState.currentPage - 1,
-          isLoading: true
-        }),
-        () => {
-          if (this.cachedPageResult[page - 1]) {
-            this.setState({
-              currentPageItems: this.cachedPageResult[page - 1],
-              isLoading: false
-            });
-            return;
           }
-          this.getPageItems().then(result => {
-            this.cachedPageResult[page - 1] = result;
-            if (this.state.currentPage === page) {
-              this.setState({
-                currentPageItems: result,
-                isLoading: false
-              });
-            }
-          });
-        }
-      );
-    }
+        });
+      }
+    );
   };
 
-  firstPagefetch=(page)=> {
-        fetchPageItems(page).then(items => {
+  handlePagePrevClick=()=> {
+          let page = this.state.currentPage - 1;
           this.setState(
-            {
-              allpageitems: items,
-              currentPage: 1
-            },
+            prevState => ({
+              currentPage: prevState.currentPage - 1,
+              isLoading: true
+            }),
             () => {
-              this.getPageItems().then(result => {
-                //cache the result of 1st page
-                console.log(result);
-                this.cachedPageResult = [];
-                this.cachedPageResult[0] = result;
-                console.log(this.cachedPageResult);
-                let currentPage = this.state.currentPage;
-
+              if (this.cachedPageResult[page - 1]) {
                 this.setState({
-                  currentPageItems: result,
+                  currentPageItems: this.cachedPageResult[page - 1],
                   isLoading: false
                 });
-                //make request for next page if there
-                if (currentPage + 1 <= this.totalPages())
-                  this.getPageItems(currentPage + 1).then(result => {
-                    this.cachedPageResult.push(result);
+                return;
+              }
+              this.getPageItems().then(result => {
+                this.cachedPageResult[page - 1] = result;
+                if (this.state.currentPage === page) {
+                  this.setState({
+                    currentPageItems: result,
+                    isLoading: false
                   });
+                }
               });
             }
           );
-        });
 
   }
 
+  changePage = type => {
+    if (type === "increment") {
+      this.handlePageNextClick();
+    } else {
+      this.handlePagePrevClick()
 
+    }
+  };
+
+  firstPagefetch = page => {
+    fetchPageItems(page).then(items => {
+      this.setState(
+        {
+          allpageitems: items,
+          currentPage: 1
+        },
+        () => {
+          this.getPageItems().then(result => {
+            //cache the result of 1st page
+            console.log(result);
+            this.cachedPageResult = [];
+            this.cachedPageResult[0] = result;
+            console.log(this.cachedPageResult);
+            let currentPage = this.state.currentPage;
+
+            this.setState({
+              currentPageItems: result,
+              isLoading: false
+            });
+            //make request for next page if there
+            if (currentPage + 1 <= this.totalPages())
+              this.getPageItems(currentPage + 1).then(result => {
+                this.cachedPageResult.push(result);
+              });
+          });
+        }
+      );
+    });
+  };
 
   componentDidMount() {
-    this.firstPagefetch("top")
-
+    this.firstPagefetch("top");
   }
 
-  changePageHeader=(newPageHeader)=>{
-      this.setState({
-        pageHeader:newPageHeader ,
+  changePageHeader = newPageHeader => {
+    this.setState(
+      {
+        pageHeader: newPageHeader,
         allpageitems: [],
         currentPageItems: [],
         currentPage: 1,
         isLoading: true
-      },()=> {
-        this.firstPagefetch(pagetoUrlMapper[this.state.pageHeader])
-      })
-    
-  }
+      },
+      () => {
+        this.firstPagefetch(pagetoUrlMapper[this.state.pageHeader]);
+      }
+    );
+  };
 
   render() {
     return (

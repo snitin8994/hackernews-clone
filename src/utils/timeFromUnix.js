@@ -1,4 +1,4 @@
-export function timeAgo(time) {
+export function timeFromUnix(time) {
   const between = Date.now() / 1000 - Number(time);
   if (between < 3600) {
     return pluralize(Math.floor(between / 60), " minute");

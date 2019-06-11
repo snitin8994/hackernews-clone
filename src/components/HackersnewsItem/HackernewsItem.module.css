@@ -3,7 +3,6 @@
   font-family: 'Open Sans', sans-serif;
   border: 2px solid #f60;
   border-radius: 100px;
-  
   background-color: white;
   color: #34495e;
   display: flex;
@@ -11,10 +10,41 @@
   margin-bottom: 1rem;
 }
 
+@media screen and (max-width: 620px) {
+  .item {
+    border-radius: unset;
+  }
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+}
+
+
 .link {
   color: #34495e;
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
+}
+
+.author {
+  margin-right: 0.5rem;
+}
+
+.comments {
+  margin-left: 0.5rem;
+}
+
+.time {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+
+}
+
+.secondary_link {
+  text-decoration: none;
+  color: #34495e;
 }
 
 .score {
@@ -22,4 +52,8 @@
   flex: 0 0 5rem;
   font-size: 2.5rem;
   margin-right: 1rem;
+}
+
+.user_detail {
+  font-size: 1.3rem;
 }
