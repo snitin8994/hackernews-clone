@@ -3,10 +3,14 @@
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 html {
   font-size: 62.5%;
 }
 
+.main {
+  background-color: #f9f9f9;
+  min-height: calc(100vh - 100px)
+}

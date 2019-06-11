@@ -1,6 +1,5 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
-import App from "../../App"
+import { Link } from "react-router-dom";
 import style from "./Header.module.css";
 
 function Header(props) {
@@ -13,31 +12,16 @@ function Header(props) {
           </div>
         </Link>
         {props.tags.map((tag, index) => {
-          const urlTag = tag[0].toLowerCase()+tag.slice(1)
-          return (<Link to={`/${urlTag}`} key={index} className={style.anchor}>
-            <span className={style.tags}>{tag}</span>
-          </Link>)
+          const urlTag = tag[0].toLowerCase() + tag.slice(1);
+          return (
+            <Link to={`/${urlTag}`} key={index} className={style.anchor}>
+              <span className={style.tags}>{tag}</span>
+            </Link>
+          );
         })}
-        {/* <Link className={style.anchor}>
-          <span className={style.tags}>Top</span>
-        </Link>
-        <Link className={style.anchor}>
-          <span className={style.tags}>New</span>
-        </Link>
-        <Link className={style.anchor}>
-          {" "}
-          <span className={style.tags}>Show</span>
-        </Link>
-        <Link className={style.anchor}>
-          {" "}
-          <span className={style.tags}>Ask</span>
-        </Link>
-        <Link className={style.anchor}>
-          {" "}
-          <span className={style.tags}>Jobs</span>
-        </Link> */}
       </nav>
-      <Route path="/:tag" component={App} />
+
+      
     </header>
   );
 }

@@ -17,12 +17,13 @@
 
 .text {
     margin-right: 2rem;
+    color: #34495e;
     font-family: 'Roboto', sans-serif;
 }
 
 .link {
     text-decoration: none;
-    color: black;
+    color: #34495e
 }
 
 .disabled {
