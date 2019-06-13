@@ -1,8 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 .container{
     max-width: 800px;
     width: 100%;
     padding:1rem;
     margin: 0 auto;
+
+}
+
+.noresult_box{
+    height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-family: 'Roboto', sans-serif;
 
 }
 

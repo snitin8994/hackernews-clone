@@ -25,7 +25,7 @@ class App extends React.Component {
     currentPageItems: [],
     currentPage: 1,
     isLoading: true,
-    totalSearchPages: -1
+    totalSearchPages: 1
   };
 
   fetchSearchResults = page => {
@@ -44,7 +44,8 @@ class App extends React.Component {
         allpageitems: [],
         currentPageItems: [],
         currentPage: 1,
-        isLoading: true
+        isLoading: true,
+        totalSearchPages: 1
       },
       () => {
         this.fetchSearchResults().then(result => {
@@ -207,7 +208,7 @@ class App extends React.Component {
         currentPageItems: [],
         currentPage: 1,
         isLoading: true,
-        totalSearchPages: -1
+        totalSearchPages: 1
       },
       () => {
         this.firstPagefetch(pagetoUrlMapper[this.state.pageHeader]);
@@ -235,6 +236,7 @@ class App extends React.Component {
           <HackernewsList
             items={this.state.currentPageItems}
             isLoading={this.state.isLoading}
+            totalSearchPages={this.state.totalSearchPages}
           />
         </main>
       </div>
