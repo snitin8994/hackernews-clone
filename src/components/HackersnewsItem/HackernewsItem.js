@@ -6,7 +6,7 @@ function HackernewsItem(props) {
   const { story } = props;
   return (
     <div className={style.item}>
-      <div className={style.score}>{story.score}</div>
+      <div className={style.score}>{story.points || story.score}</div>
       <div className={style.container}>
         <a
           target="_blank"
@@ -18,22 +18,23 @@ function HackernewsItem(props) {
         </a>
         <div>
           <span className={`${style.author} ${style.user_detail}`}>
-            {story.by}
+            {story.author || story.by}
           </span>
           <span>|</span>
           <span className={`${style.time}  ${style.user_detail}`}>
-            {timeFromUnix(story.time)} ago
+            {timeFromUnix(story.created_at_i || story.time)} ago
           </span>
           <span>|</span>
           <a
-            href={`https://news.ycombinator.com/item?id=${story.id}`}
+            href={`https://news.ycombinator.com/item?id=${story.objectID ||
+              story.id}`}
             target="_blank"
             rel="noopener noreferrer"
             className={`${style.comments} ${style.secondary_link}  ${
               style.user_detail
             }`}
           >
-            {story.descendants} comments
+            {story.num_comments || story.descendants} comments
           </a>
         </div>
       </div>

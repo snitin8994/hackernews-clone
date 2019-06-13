@@ -4,8 +4,12 @@ export function timeFromUnix(time) {
     return pluralize(Math.floor(between / 60), " minute");
   } else if (between < 86400) {
     return pluralize(Math.floor(between / 3600), " hour");
-  } else {
-    return pluralize(Math.floor(between / 86400), " day");
+  } else if (between < (86400 * 365)) {
+    return pluralize(Math.floor(between / 86400), " day")
+  }
+  else {
+    return pluralize(Math.floor(between / (86400*365)), " year");
+
   }
 }
 

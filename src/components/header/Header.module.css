@@ -15,6 +15,7 @@
   cursor: pointer;
 }
 
+
 .tags {
   color: white;
   font-size: 2rem;
@@ -37,3 +38,8 @@
   height: 5rem;
   padding: 0 1.5rem;
 }
+
+.selected {
+  color: rgb(112, 35, 150);
+}
+
