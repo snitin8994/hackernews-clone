@@ -33,6 +33,16 @@
   height: 100%;
 }
 
+.pageitem_container{
+  display: flex;
+}
+
+@media screen and (max-width: 600px ) {
+  .pageitem_container {
+    display: none;
+  }
+}
+
 .header {
   background-color: #f60;
   height: 5rem;

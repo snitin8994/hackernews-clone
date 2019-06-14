@@ -1,6 +1,6 @@
 import React from "react";
-import SearchInput from "../Search/SearchInput";
 import style from "./Header.module.css";
+import Search from "../Search/SearchInput";
 
 function Header(props) {
   return (
@@ -14,20 +14,23 @@ function Header(props) {
             R
           </span>
         </div>
-        {props.tags.map((tag, index) => {
-          let navLinkStyle = `${style.tags}`;
-          if (tag === props.pageHeader) navLinkStyle = `${style.tags} ${style.selected}`;
-          return (
-            <span
-              key={index}
-              onClick={() => props.changePageheader(tag)}
-              className={navLinkStyle}
-            >
-              {tag}
-            </span>
-          );
-        })}
-        <SearchInput search={props.search} />
+        <div className={style.pageitem_container}>
+          {props.tags.map((tag, index) => {
+            let navLinkStyle = `${style.tags}`;
+            if (tag === props.pageHeader)
+              navLinkStyle = `${style.tags} ${style.selected}`;
+            return (
+              <span
+                key={index}
+                onClick={() => props.changePageheader(tag)}
+                className={navLinkStyle}
+              >
+                {tag}
+              </span>
+            );
+          })}
+        </div>
+        <Search search={props.search} />
       </nav>
     </header>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import Select from "react-select";
 import Header from "./components/header/Header";
 import Pagination from "./components/Pagination/Pagination";
 import { fetchPageItems } from "./utils/fetchPageItems";
@@ -18,6 +19,32 @@ const pagetoUrlMapper = {
 
 const tags = ["Top", "New", "Show", "Ask", "Jobs"];
 
+const options = tags.map((tag)=> ({
+  value: tag,
+  label: tag
+}))
+
+const customSelectStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    borderBottom: "1px solid #f60",
+    color: state.isSelected ? "red" : "#f60",
+    padding: 10,
+    fontSize: "1.3rem",
+    fontFamily: "'Roboto', sans-serif"
+  }),
+
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+    const fontSize ="1.3rem"
+    // const fontFamily: "'Roboto', sans-serif";
+
+    return { ...provided, opacity, transition,fontSize };
+  }
+};
+
+
 class App extends React.Component {
   state = {
     pageHeader: "Top",
@@ -25,7 +52,14 @@ class App extends React.Component {
     currentPageItems: [],
     currentPage: 1,
     isLoading: true,
-    totalSearchPages: 1
+    totalSearchPages: 1,
+    selectedOption: null
+  };
+
+  handleChange = selectedOption => {
+    this.setState({ selectedOption },()=> {
+      this.changePageHeader(this.state.selectedOption.value)
+    });
   };
 
   fetchSearchResults = page => {
@@ -45,7 +79,8 @@ class App extends React.Component {
         currentPageItems: [],
         currentPage: 1,
         isLoading: true,
-        totalSearchPages: 1
+        totalSearchPages: 1,
+        selectedOption: null
       },
       () => {
         this.fetchSearchResults().then(result => {
@@ -183,13 +218,13 @@ class App extends React.Component {
                 currentPageItems: result,
                 isLoading: false
               });
-            
-            //make request for next page if there
-            if (currentPage + 1 <= this.totalPages())
-              this.getPageItems(currentPage + 1).then(result => {
-                this.cachedPageResult.push(result);
-              });
-          }
+
+              //make request for next page if there
+              if (currentPage + 1 <= this.totalPages())
+                this.getPageItems(currentPage + 1).then(result => {
+                  this.cachedPageResult.push(result);
+                });
+            }
           });
         }
       );
@@ -208,7 +243,8 @@ class App extends React.Component {
         currentPageItems: [],
         currentPage: 1,
         isLoading: true,
-        totalSearchPages: 1
+        totalSearchPages: 1,
+        selectedOption: {label:newPageHeader,value:newPageHeader}
       },
       () => {
         this.firstPagefetch(pagetoUrlMapper[this.state.pageHeader]);
@@ -220,11 +256,20 @@ class App extends React.Component {
     return (
       <div>
         <Header
-          search={this.search}
           changePageheader={this.changePageHeader}
           tags={tags}
+          search={this.search}
           pageHeader={this.state.pageHeader}
         />
+        <div className="page-select">
+          <Select
+            styles={customSelectStyles}
+            value={this.state.selectedOption}
+            onChange={this.handleChange}
+            options={options}
+          />
+        </div>
+
         <Pagination
           currentPage={this.state.currentPage}
           changePage={this.changePage}
