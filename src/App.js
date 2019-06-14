@@ -274,6 +274,7 @@ class App extends React.Component {
           currentPage={this.state.currentPage}
           changePage={this.changePage}
           pages={this.totalPages()}
+          isLoading={this.state.isLoading}
           pageHeader={this.state.pageHeader}
           totalSearchPages={this.state.totalSearchPages}
         />

@@ -39,7 +39,7 @@ function Pagination(props) {
           )}
           <div className={style.text}>
             {currentPage ===
-            (props.pageHeader === "Search" ? props.totalSearchPages : pages) ? (
+            (props.pageHeader === "Search" ? props.totalSearchPages : pages)||props.isLoading ? (
               <a
                 href="/"
                 className={style.disabled}
