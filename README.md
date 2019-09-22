@@ -1,3 +1,14 @@
+# Hackernews Clone
+
+A replica of [Hackernews](https://news.ycombinator.com/)
+
+To run the development server, run the following command in terminal
+
+```
+npm run start
+```
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
